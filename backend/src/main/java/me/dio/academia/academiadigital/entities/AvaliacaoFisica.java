@@ -1,23 +1,43 @@
 package me.dio.academia.academiadigital.entities;
 
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class AvaliacaoFisica {
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "tb_avaliacaoFisica")
+public class AvaliacaoFisica implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="Aluno_id")
 	private Aluno aluno;
-	private LocalDate dataDaAvaliacao;
+	private LocalDateTime dataDaAvaliacao = LocalDateTime.now();
+	@Column(name="peso_atual")
 	private double peso;
+	@Column(name="altura_atual")
 	private double altura;
 	
 	public AvaliacaoFisica() {
 	}
 
-	public AvaliacaoFisica(Long id, Aluno aluno, LocalDate dataDaAvaliacao, double peso, double altura) {
+	public AvaliacaoFisica(Long id, Aluno aluno, double peso, double altura) {
 		this.id = id;
 		this.aluno = aluno;
-		this.dataDaAvaliacao = dataDaAvaliacao;
 		this.peso = peso;
 		this.altura = altura;
 	}
@@ -38,11 +58,11 @@ public class AvaliacaoFisica {
 		this.aluno = aluno;
 	}
 
-	public LocalDate getDataDaAvaliacao() {
+	public LocalDateTime getDataDaAvaliacao() {
 		return dataDaAvaliacao;
 	}
 
-	public void setDataDaAvaliacao(LocalDate dataDaAvaliacao) {
+	public void setDataDaAvaliacao(LocalDateTime dataDaAvaliacao) {
 		this.dataDaAvaliacao = dataDaAvaliacao;
 	}
 
