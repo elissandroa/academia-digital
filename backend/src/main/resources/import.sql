@@ -1,3 +1,5 @@
+
+
 INSERT INTO tb_aluno (nome,cpf,bairro,data_de_nascimento) values ('Joaquim','023456789','Bairro 1','2001-10-20');
 INSERT INTO tb_aluno (nome,cpf,bairro,data_de_nascimento) values ('Pedro','223456789','Bairro 2','2015-01-12');
 INSERT INTO tb_aluno (nome,cpf,bairro,data_de_nascimento) values ('Elizabeth','323456789','Bairro 3','1958-02-25');
@@ -9,4 +11,5 @@ INSERT INTO tb_aluno (nome,cpf,bairro,data_de_nascimento) values ('Catarina','82
 INSERT INTO tb_aluno (nome,cpf,bairro,data_de_nascimento) values ('Selena','923456789','Bairro 9','1992-07-14');
 INSERT INTO tb_aluno (nome,cpf,bairro,data_de_nascimento) values ('Carla','103456789','Bairro 10','1990-08-15');
 			
-	                      										 
+	            
+INSERT INTO tb_avaliacao_fisica (altura_atual,peso_atual,aluno_id,data_da_avaliacao) VALUES (1.75,47.5,1,'2023-09-28');	                      										 

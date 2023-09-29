@@ -9,67 +9,54 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import me.dio.academia.academiadigital.dto.AlunoDTO;
 import me.dio.academia.academiadigital.dto.AvaliacaoFisicaDTO;
-import me.dio.academia.academiadigital.entities.Aluno;
 import me.dio.academia.academiadigital.entities.AvaliacaoFisica;
-import me.dio.academia.academiadigital.repositories.AlunoRepository;
 import me.dio.academia.academiadigital.repositories.AvaliacaoFisicaRepository;
 import me.dio.academia.academiadigital.services.exceptions.DatabaseException;
 import me.dio.academia.academiadigital.services.exceptions.EntityNotFoundExceptionService;
 
 @Service
-public class AlunoService {
+public class AvaliacaoFisicaService {
 
 	@Autowired
-	private AlunoRepository repository;
+	private AvaliacaoFisicaRepository repository;
 	
-	@Autowired
-	private AvaliacaoFisicaRepository avaliacaoFisicaRepository;
 	
 	@Transactional(readOnly = true)
-	public List<AlunoDTO> findAll(){
-		List<Aluno>alunos = repository.findAll();
-		return alunos.stream().map(x -> new AlunoDTO(x)).toList();
+	public List<AvaliacaoFisicaDTO> findAll(){
+		List<AvaliacaoFisica>AvaliacaoFisicas = repository.findAll();
+		return AvaliacaoFisicas.stream().map(x -> new AvaliacaoFisicaDTO(x)).toList();
 	}
 	
 	@Transactional(readOnly = true)
-	public AlunoDTO findById(Long id){
-		Optional<Aluno> alunoPorId = repository.findById(id);
-		Aluno entity = alunoPorId.orElseThrow(() -> new EntityNotFoundExceptionService("Entity not found"));
-		return new AlunoDTO(entity, entity.getAvaliacoes());
+	public AvaliacaoFisicaDTO findById(Long id){
+		Optional<AvaliacaoFisica> AvaliacaoFisicaPorId = repository.findById(id);
+		AvaliacaoFisica entity = AvaliacaoFisicaPorId.orElseThrow(() -> new EntityNotFoundExceptionService("Entity not found"));
+		return new AvaliacaoFisicaDTO(entity);
 	}
 	
 	@Transactional
-	public AlunoDTO insert(AlunoDTO dto) {
-		Aluno entity = new Aluno();
+	public AvaliacaoFisicaDTO insert(AvaliacaoFisicaDTO dto) {
+		AvaliacaoFisica entity = new AvaliacaoFisica();
 		copyDtoToEntity(dto, entity);
 		entity = repository.save(entity);
-		return new AlunoDTO(entity);
+		return new AvaliacaoFisicaDTO(entity);
 
 	}
 
-	private void copyDtoToEntity(AlunoDTO dto, Aluno entity) {
-		entity.setNome(dto.getNome());
-		entity.setBairro(dto.getBairro());
-		entity.setCpf(dto.getCpf());
-		entity.setDataDeNascimento(dto.getDataDeNascimento());
-		
-		
-		entity.getAvaliacoes().clear();
-		
-		for(AvaliacaoFisicaDTO avaliaDTO : dto.getAvaliacoes()) {
-			AvaliacaoFisica avaliacao = avaliacaoFisicaRepository.getReferenceById(avaliaDTO.getId());
-			entity.getAvaliacoes().add(avaliacao);
-		}
+	private void copyDtoToEntity(AvaliacaoFisicaDTO dto, AvaliacaoFisica entity) {
+		entity.setAltura(dto.getAltura());
+		entity.setAluno(dto.getAluno());
+		entity.setDataDaAvaliacao(dto.getDataDaAvaliacao());
+		entity.setPeso(dto.getPeso());
 	}
 	
 	@Transactional
-	public AlunoDTO update(Long id, AlunoDTO dto) {
+	public AvaliacaoFisicaDTO update(Long id, AvaliacaoFisicaDTO dto) {
 		try {
-			Aluno entity = repository.getReferenceById(id);
+			AvaliacaoFisica entity = repository.getReferenceById(id);
 			copyDtoToEntity(dto, entity);
-			return new AlunoDTO(entity);
+			return new AvaliacaoFisicaDTO(entity);
 		} catch (EntityNotFoundExceptionService e) {
 			throw new EntityNotFoundExceptionService("Id not found "+id);
 		}

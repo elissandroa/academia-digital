@@ -2,12 +2,14 @@ package me.dio.academia.academiadigital.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,8 +34,9 @@ public class Aluno implements Serializable{
 	private String bairro;
 	private LocalDate dataDeNascimento;
 	
-	@OneToMany(mappedBy="aluno", fetch = FetchType.LAZY)
-	private List<AvaliacaoFisica> avaliacoes = new ArrayList<>();
+	@OneToMany(mappedBy = "aluno", cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Set<AvaliacaoFisica> avaliacoes = new HashSet<>();
 	
 	public Aluno() {
 	}
@@ -86,7 +89,7 @@ public class Aluno implements Serializable{
 		this.dataDeNascimento = dataDeNascimento;
 	}
 
-	public List<AvaliacaoFisica> getAvaliacoes() {
+	public Set<AvaliacaoFisica> getAvaliacoes() {
 		return avaliacoes;
 	}
 
