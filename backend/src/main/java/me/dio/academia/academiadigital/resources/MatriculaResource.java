@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import jakarta.validation.Valid;
 import me.dio.academia.academiadigital.dto.MatriculaDTO;
 import me.dio.academia.academiadigital.services.MatriculaService;
 
@@ -38,7 +39,7 @@ public class MatriculaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<MatriculaDTO> insert(@RequestBody MatriculaDTO dto){
+	public ResponseEntity<MatriculaDTO> insert(@Valid @RequestBody MatriculaDTO dto){
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();
@@ -46,7 +47,7 @@ public class MatriculaResource {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<MatriculaDTO> update(@RequestBody MatriculaDTO dto, @PathVariable Long id){
+	public ResponseEntity<MatriculaDTO> update(@Valid @RequestBody MatriculaDTO dto, @PathVariable Long id){
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import jakarta.validation.Valid;
 import me.dio.academia.academiadigital.dto.AvaliacaoFisicaDTO;
 import me.dio.academia.academiadigital.services.AvaliacaoFisicaService;
 
@@ -38,7 +39,7 @@ public class AvaliacaoFisicaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<AvaliacaoFisicaDTO> insert(@RequestBody AvaliacaoFisicaDTO dto){
+	public ResponseEntity<AvaliacaoFisicaDTO> insert(@Valid @RequestBody AvaliacaoFisicaDTO dto){
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();
@@ -46,7 +47,7 @@ public class AvaliacaoFisicaResource {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<AvaliacaoFisicaDTO> update(@RequestBody AvaliacaoFisicaDTO dto, @PathVariable Long id){
+	public ResponseEntity<AvaliacaoFisicaDTO> update(@Valid @RequestBody AvaliacaoFisicaDTO dto, @PathVariable Long id){
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

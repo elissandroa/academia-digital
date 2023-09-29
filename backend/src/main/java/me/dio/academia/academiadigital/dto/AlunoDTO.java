@@ -5,15 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.validator.constraints.br.CPF;
+
+import jakarta.validation.constraints.NotBlank;
 import me.dio.academia.academiadigital.entities.Aluno;
 import me.dio.academia.academiadigital.entities.AvaliacaoFisica;
 
 public class AlunoDTO {
 
 	private Long id;
+	@NotBlank
 	private String nome;
+	@CPF
 	private String cpf;
+	@NotBlank
 	private String bairro;
+	@NotBlank
 	private LocalDate dataDeNascimento;
 	
 	private List<AvaliacaoFisicaDTO> avaliacoes = new ArrayList<>();	

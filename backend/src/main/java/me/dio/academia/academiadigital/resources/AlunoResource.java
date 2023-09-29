@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import jakarta.validation.Valid;
 import me.dio.academia.academiadigital.dto.AlunoDTO;
 import me.dio.academia.academiadigital.services.AlunoService;
 
@@ -38,7 +39,7 @@ public class AlunoResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<AlunoDTO> insert(@RequestBody AlunoDTO dto){
+	public ResponseEntity<AlunoDTO> insert(@Valid @RequestBody AlunoDTO dto){
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(dto.getId()).toUri();
@@ -46,7 +47,7 @@ public class AlunoResource {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<AlunoDTO> update(@RequestBody AlunoDTO dto, @PathVariable Long id){
+	public ResponseEntity<AlunoDTO> update(@Valid @RequestBody AlunoDTO dto, @PathVariable Long id){
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

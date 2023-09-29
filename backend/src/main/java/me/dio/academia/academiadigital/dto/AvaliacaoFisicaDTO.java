@@ -2,6 +2,7 @@ package me.dio.academia.academiadigital.dto;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotBlank;
 import me.dio.academia.academiadigital.entities.Aluno;
 import me.dio.academia.academiadigital.entities.AvaliacaoFisica;
 
@@ -9,7 +10,9 @@ public class AvaliacaoFisicaDTO {
 	private Long id;
 	private Aluno aluno;
 	private LocalDateTime dataDaAvaliacao;
+	@NotBlank
 	private double peso;
+	@NotBlank
 	private double altura;
 	
 	public AvaliacaoFisicaDTO() {
