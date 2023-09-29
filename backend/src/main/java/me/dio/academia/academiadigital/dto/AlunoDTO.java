@@ -1,4 +1,4 @@
-package me.dio.academia.academiadigital.entities.dto;
+package me.dio.academia.academiadigital.dto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
